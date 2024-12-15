@@ -17,7 +17,10 @@ jobs:
         python-version: 3.8
 
     - name: Install Bandit
-      run: pip install bandit -y
+      run: pip install bandit
 
     - name: Run Bandit Scan
       run: bandit -ll -ii -r .
+
+    - name: Install Yum
+      run: pip install yum
