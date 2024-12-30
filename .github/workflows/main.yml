@@ -29,8 +29,9 @@ jobs:
       name: bandit-findings
       path: bandit-report.json
       
-   - name: defectdojo import report
+   - name: Defectdojo Import Report
      uses: portswigger-cloud/defectdojo-import-scan@v1.0.1
+     if: always()
      with:
       defectdojo-url: 172.210.46.36:8080
       defectdojo-username: ${{ secrets.DEFECTDOJO_USER }}
@@ -85,8 +86,9 @@ jobs:
       name: docker-scout-findings
       path: docker-scout-report.sarif
 
-  - name: defectdojo import report
+  - name: Defectdojo Import Report
     uses: portswigger-cloud/defectdojo-import-scan@v1.0.1
+    if: always()
     with:
       defectdojo-url: 172.210.46.36:8080
       defectdojo-username: ${{ secrets.DEFECTDOJO_USER }}
