@@ -49,9 +49,9 @@ jobs:
      uses: ivanamat/defectdojo-import-scan@v1
      if: always()
      with:
-      token: 3403b5b01ff4e8b9628e82a75efa94e22be91624
+      token: Token 3403b5b01ff4e8b9628e82a75efa94e22be91624
       # (string) The DefectDojo base url. Example: https://defectdojo.domain.com
-      defectdojo_url: 172.210.46.36:8080
+      defectdojo_url: http://172.210.46.36:8080
       scan_type: SAST Scan
       file: bandit-report
       engagement: pygoat-github
