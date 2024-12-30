@@ -29,20 +29,20 @@ jobs:
       name: bandit-findings
       path: bandit-report.json
       
-   - name: Defectdojo Import Report
-     uses: portswigger-cloud/defectdojo-import-scan@v1.0.1
-     if: always()
-     with:
-      defectdojo-url: http://172.210.46.36:8080/
-      defectdojo-username: ${{ secrets.DEFECTDOJO_USER }}
-      defectdojo-password: ${{ secrets.DEFECTDOJO_PASS }}
-      defectdojo-product-type: Research and Development
-      defectdojo-product: Test Dashboard
-      defectdojo-environment-type: Development
-      defectdojo-scan-type: SAST Scan
-      defectdojo-engagement-name: pygoat-github
-      scan-results-file-name: bandit-report
-      debug: true
+   # - name: Defectdojo Import Report
+   #   uses: portswigger-cloud/defectdojo-import-scan@v1.0.1
+   #   if: always()
+   #   with:
+   #    defectdojo-url: http://172.210.46.36:8080/
+   #    defectdojo-username: ${{ secrets.DEFECTDOJO_USER }}
+   #    defectdojo-password: ${{ secrets.DEFECTDOJO_PASS }}
+   #    defectdojo-product-type: Research and Development
+   #    defectdojo-product: Test Dashboard
+   #    defectdojo-environment-type: Development
+   #    defectdojo-scan-type: SAST Scan
+   #    defectdojo-engagement-name: pygoat-github
+   #    scan-results-file-name: bandit-report
+   #    debug: true
 
    - name: Check connectivity to DefectDojo
      if: always()
@@ -50,18 +50,18 @@ jobs:
         curl -I http://172.210.46.36:8080/api/v2/api-token-auth/
 
         
-   - name: DefectDojo Import scan
-     # You may pin to the exact commit or the version.
-     # uses: ivanamat/defectdojo-import-scan@a5865a5c30dabc66736603bbded081941b9c07ea
-     uses: ivanamat/defectdojo-import-scan@v1
-     if: always()
-     with:
-      token: Token 3403b5b01ff4e8b9628e82a75efa94e22be91624
-      # (string) The DefectDojo base url. Example: https://defectdojo.domain.com
-      defectdojo_url: http://172.210.46.36:8080
-      scan_type: SAST Scan
-      file: bandit-report
-      engagement: pygoat-github
+   # - name: DefectDojo Import scan
+   #   # You may pin to the exact commit or the version.
+   #   # uses: ivanamat/defectdojo-import-scan@a5865a5c30dabc66736603bbded081941b9c07ea
+   #   uses: ivanamat/defectdojo-import-scan@v1
+   #   if: always()
+   #   with:
+   #    token: Token 3403b5b01ff4e8b9628e82a75efa94e22be91624
+   #    # (string) The DefectDojo base url. Example: https://defectdojo.domain.com
+   #    defectdojo_url: http://172.210.46.36:8080
+   #    scan_type: SAST Scan
+   #    file: bandit-report
+   #    engagement: pygoat-github
 
 
  image_scan:
