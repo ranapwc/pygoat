@@ -42,7 +42,20 @@ jobs:
       defectdojo-scan-type: SAST Scan
       defectdojo-engagement-name: pygoat-github
       scan-results-file-name: bandit-report
-      
+
+   - name: DefectDojo Import scan
+     # You may pin to the exact commit or the version.
+     # uses: ivanamat/defectdojo-import-scan@a5865a5c30dabc66736603bbded081941b9c07ea
+     uses: ivanamat/defectdojo-import-scan@v1
+     with:
+      token: 3403b5b01ff4e8b9628e82a75efa94e22be91624
+      # (string) The DefectDojo base url. Example: https://defectdojo.domain.com
+      defectdojo_url: 172.210.46.36:8080
+      scan_type: SAST Scan
+      file: bandit-report
+      engagement: pygoat-github
+
+
  image_scan:
   name: Build image & run Scan
   runs-on: ubuntu-latest
