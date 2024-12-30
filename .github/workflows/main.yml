@@ -29,6 +29,19 @@ jobs:
       name: bandit-findings
       path: bandit-report.json
       
+   - name: defectdojo import report
+     uses: portswigger-cloud/defectdojo-import-scan@v1.0.1
+     with:
+      defectdojo-url: 172.210.46.36:8080
+      defectdojo-username: ${{ secrets.DEFECTDOJO_USER }}
+      defectdojo-password: ${{ secrets.DEFECTDOJO_PASS }}
+      defectdojo-product-type: Research and Development
+      defectdojo-product: Test Dashboard
+      defectdojo-environment-type: Development
+      defectdojo-scan-type: SAST Scan
+      defectdojo-engagement-name: pygoat-github
+      scan-results-file-name: bandit-report
+      
  image_scan:
   name: Build image & run Scan
   runs-on: ubuntu-latest
@@ -71,4 +84,18 @@ jobs:
     with:
       name: docker-scout-findings
       path: docker-scout-report.sarif
+
+  - name: defectdojo import report
+    uses: portswigger-cloud/defectdojo-import-scan@v1.0.1
+    with:
+      defectdojo-url: 172.210.46.36:8080
+      defectdojo-username: ${{ secrets.DEFECTDOJO_USER }}
+      defectdojo-password: ${{ secrets.DEFECTDOJO_PASS }}
+      defectdojo-product-type: Research and Development
+      defectdojo-product: Test Dashboard
+      defectdojo-environment-type: Development
+      defectdojo-scan-type: Container Scan
+      defectdojo-engagement-name: pygoat-github
+      scan-results-file-name: docker-scout-report
+     
      
