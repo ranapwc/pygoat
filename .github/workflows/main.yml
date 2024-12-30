@@ -45,6 +45,7 @@ jobs:
       debug: true
 
    - name: Check connectivity to DefectDojo
+     if: always()
      run: |
         curl -I http://172.210.46.36:8080/api/v2/api-token-auth/
 
