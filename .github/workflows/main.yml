@@ -33,7 +33,7 @@ jobs:
      uses: portswigger-cloud/defectdojo-import-scan@v1.0.1
      if: always()
      with:
-      defectdojo-url: 172.210.46.36:8080
+      defectdojo-url: 172.210.46.36:8080/
       defectdojo-username: ${{ secrets.DEFECTDOJO_USER }}
       defectdojo-password: ${{ secrets.DEFECTDOJO_PASS }}
       defectdojo-product-type: Research and Development
@@ -104,7 +104,7 @@ jobs:
     uses: portswigger-cloud/defectdojo-import-scan@v1.0.1
     if: always()
     with:
-      defectdojo-url: 172.210.46.36:8080
+      defectdojo-url: 172.210.46.36:8080/
       defectdojo-username: ${{ secrets.DEFECTDOJO_USER }}
       defectdojo-password: ${{ secrets.DEFECTDOJO_PASS }}
       defectdojo-product-type: Research and Development
