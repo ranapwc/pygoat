@@ -27,8 +27,8 @@ jobs:
   - task: UsePythonVersion@0
     displayName: 'Set up Python'
     inputs:
-      versionSpec: '3.8'
-
+      versionSpec: '3.8.10'
+      
   - script: |
       pip install bandit
     displayName: 'Install Bandit'
