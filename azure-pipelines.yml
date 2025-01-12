@@ -24,9 +24,6 @@ jobs:
   pool:
     name: 'Self-hosted'
   steps:
-  - task: Checkout@2
-    displayName: 'Checkout code'
-
   - task: UsePythonVersion@0
     displayName: 'Set up Python'
     inputs:
