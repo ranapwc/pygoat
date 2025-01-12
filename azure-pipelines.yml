@@ -31,7 +31,14 @@ jobs:
   - script: |
       export PATH=$PATH:/usr/local/bin/python3.13:/Library/Frameworks/Python.framework/Versions/3.13/bin
       python3.13 -V
-    displayName: 'Set up Python 3.13.1'
+      python3.13 -m pip install --upgrade pip
+      python3.13 -m pip --version
+    displayName: 'Set up Python 3.13.1 and pip'
+
+  - script: |
+      python3.13 -m pip install bandit
+    displayName: 'Install Bandit'
+    
   # - task: UsePythonVersion@0
   #   displayName: 'Set up Python'
   #   inputs:
@@ -39,9 +46,6 @@ jobs:
   #     addToPath: true
   #     disableDownloadFromRegistry: true
       
-  - script: |
-      pip install bandit
-    displayName: 'Install Bandit'
 
   - script: |
       bandit -ll -ii -r . -f json -o bandit-report.json
