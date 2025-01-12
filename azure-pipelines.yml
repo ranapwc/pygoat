@@ -37,8 +37,8 @@ jobs:
 
   - script: |
       python3.13 -m pip install bandit
-      export PATH=$PATH:/Library/Frameworks/Python.framework/Versions/3.13/bin/Scripts
-      bandit --version
+      export PATH=$PATH:/Library/Frameworks/Python.framework/Versions/3.13/bin
+      python3.13 -m bandit --version
     displayName: 'Install Bandit'
 
   - script: |
