@@ -38,15 +38,6 @@ jobs:
   #     versionSpec: '3.13.1'
   #     addToPath: true
   #     disableDownloadFromRegistry: true
-
-  - script: $(pyTools.pythonLocation)/bin/pip install --upgrade tox
-    displayName: Install Python-based tools.
-
-  - task: UsePythonVersion@0
-    inputs:
-      versionSpec: '$(python.version)'
-      architecture: 'x64'
-    displayName: Use cached Python $(python.version) for tests.
       
   - script: |
       pip install bandit
