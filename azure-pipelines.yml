@@ -18,3 +18,25 @@ jobs:
   - script: |
       echo "Starting the SAST scan job..."
     displayName: 'Echo Message'
+
+- job: sast_scan
+  displayName: 'Run Bandit Scan'
+  pool:
+    name: 'Self-hosted'
+  steps:
+  - task: Checkout@v2
+    displayName: 'Checkout code'
+
+  - task: UsePythonVersion@0
+    displayName: 'Set up Python'
+    inputs:
+      versionSpec: '3.8'
+
+  - script: |
+      pip install bandit
+    displayName: 'Install Bandit'
+
+  - script: |
+      bandit -ll -ii -r . -f json -o bandit-report.json
+    displayName: 'Run Bandit Scan'
+
