@@ -31,7 +31,7 @@ jobs:
   - task: UsePythonVersion@0
     displayName: 'Set up Python'
     inputs:
-      versionSpec: '3.8.10'
+      versionSpec: '3.8'
       addToPath: true
       architecture: 'x64'
       
