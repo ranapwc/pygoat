@@ -46,14 +46,15 @@ jobs:
       bandit -ll -ii -r . -f json -o bandit-report.json
       deactivate
     displayName: 'Run Bandit Scan'
-    
- # - task: PublishBuildArtifacts@1
- #    displayName: 'Upload Artifact'
- #    inputs:
- #      PathtoPublish: 'bandit-report.json'
- #      ArtifactName: 'bandit-findings'
- #      publishLocation: 'Container'
-    
+
+
+  - task: PublishBuildArtifacts@1
+    displayName: 'Upload Artifact'
+    inputs:
+      PathtoPublish: 'bandit-report.json'
+      ArtifactName: 'bandit-findings'
+      publishLocation: 'Container'
+
   # - task: UsePythonVersion@0 
   #   displayName: 'Set up Python'
   #   inputs:
