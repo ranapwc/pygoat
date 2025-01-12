@@ -32,7 +32,8 @@ jobs:
     displayName: 'Set up Python'
     inputs:
       versionSpec: '3.8'
-      addToPath: false
+      addToPath: true
+      disableDownloadFromRegistry: true
 
   - script: $(pyTools.pythonLocation)/bin/pip install --upgrade tox
     displayName: Install Python-based tools.
