@@ -36,14 +36,23 @@ jobs:
     displayName: 'Set up Python 3.13.1 and pip'
 
   - script: |
-      python3.13 -m pip3 install bandit
-      export PATH=$PATH:/Library/Frameworks/Python.framework/Versions/3.13/bin
-      python3.13 -m bandit --version
-    displayName: 'Install Bandit'
+      source ~/myagent/_work/_tool/Python/3.13.1/x64/bin/activate
+      bandit --version
+      deactivate
+    displayName: 'Verify Bandit Installation'
 
   - script: |
+      source ~/myagent/_work/_tool/Python/3.13.1/x64/bin/activate
       bandit -ll -ii -r . -f json -o bandit-report.json
+      deactivate
     displayName: 'Run Bandit Scan'
+    
+ - task: PublishBuildArtifacts@1
+    displayName: 'Upload Artifact'
+    inputs:
+      PathtoPublish: 'bandit-report.json'
+      ArtifactName: 'bandit-findings'
+      publishLocation: 'Container'
     
   # - task: UsePythonVersion@0
   #   displayName: 'Set up Python'
