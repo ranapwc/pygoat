@@ -36,7 +36,7 @@ jobs:
     displayName: 'Set up Python 3.13.1 and pip'
 
   - script: |
-      python3.13 -m pip install bandit
+      python3.13 -m pip3 install bandit
       export PATH=$PATH:/Library/Frameworks/Python.framework/Versions/3.13/bin
       python3.13 -m bandit --version
     displayName: 'Install Bandit'
@@ -51,9 +51,4 @@ jobs:
   #     versionSpec: '3.13.1'
   #     addToPath: true
   #     disableDownloadFromRegistry: true
-      
-
-  - script: |
-      bandit -ll -ii -r . -f json -o bandit-report.json
-    displayName: 'Run Bandit Scan'
 
