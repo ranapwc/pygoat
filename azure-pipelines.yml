@@ -33,7 +33,7 @@ jobs:
     inputs:
       versionSpec: '3.13.1'
       addToPath: true
-    disableDownloadFromRegistry: true
+      disableDownloadFromRegistry: true
 
   - script: $(pyTools.pythonLocation)/bin/pip install --upgrade tox
     displayName: Install Python-based tools.
