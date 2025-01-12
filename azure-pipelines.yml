@@ -29,6 +29,7 @@ jobs:
     inputs:
       versionSpec: '3.8.10'
       addToPath: true
+      architecture: 'x64'
       
   - script: |
       pip install bandit
