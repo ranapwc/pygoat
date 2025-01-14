@@ -64,16 +64,19 @@ jobs:
     displayName: 'Install DefectDojo API'
 
   - script: |
-      python3.13 -m defectdojo_api \
-        --url 172.210.46.36:8080/ \
-        --username $(DEFECTDOJO_USER) \
-        --password $(DEFECTDOJO_PASS) \
-        --product-type "Research and Development" \
-        --product "Test Dashboard" \
-        --environment "Development" \
-        --scan-type "Container Scan" \
-        --engagement-name "pygoat-github" \
-        --file docker-scout-report
+      python -c "
+      from defectdojo_api import defectdojo_api;
+      defectdojo_api.main(
+        url='172.210.46.36:8080/',
+        username='$(DEFECTDOJO_USER)',
+        password='$(DEFECTDOJO_PASS)',
+        product_type='Research and Development',
+        product='Test Dashboard',
+        environment='Development',
+        scan_type='SAST Scan',
+        engagement_name='pygoat-github',
+        file='bandit-report'
+      )"
     displayName: 'Defectdojo Import Report'
     condition: always()
 
