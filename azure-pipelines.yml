@@ -62,33 +62,54 @@ jobs:
     DEFECTDOJO_SCAN_ENVIRONMENT: "Development"
     DEFECTDOJO_SCAN_TEST_TYPE: "SAST Scan"
     DEFECTDOJO_PRODUCT: "Test Dashboard"
-    DEFECTDOJO_PRODUCT_TYPE: "Research and Development
+    DEFECTDOJO_PRODUCT_TYPE: "Research and Development"
   steps:
   - script: |
       python3.13 -m pip install defectdojo_api
     displayName: 'Install DefectDojo API'
 
-  
-  - task: CmdLine@2
-  inputs:
-    script: |
-      TODAY=`date +%Y-%m-%d`
-      ENGAGEMENTID=`cat ENGAGEMENTID.env`
-      files=("dependency-check-report/dependency-check-report.json" "image-scan-report/image-scan-report.json" "bandit-sast-report/sast-report.json")
-      for scan in {0..2}; do
-        curl --fail --location --request POST "$(DEFECTDOJO_URL)/import-scan/" \
-          --header "Authorization: Token $(DEFECTDOJO_TOKEN)" \
-          --form "scan_date=${TODAY}" \
-          --form "scan_type=${type[$scan]}" \
-          --form "engagement=${ENGAGEMENTID}" \
-          --form "file=@$(Pipeline.Workspace)/${file[$scan]}" \
-          --form "test_type=$(DEFECTDOJO_SCAN_TEST_TYPE)" \
-          --form "environment=$(DEFECTDOJO_SCAN_ENVIRONMENT)"
-      done
-    displayName: 'Upload Reports To DefectDojo'
+displayName: 'Upload Bandit Report To DefectDojo'
     condition: always()
 
 
+
+
+
+
+
+
+
+# - job: Defectdojo_import_report
+#   dependsOn: sast_scan
+#   variables:
+#     DEFECTDOJO_SCAN_ENVIRONMENT: "Development"
+#     DEFECTDOJO_SCAN_TEST_TYPE: "SAST Scan"
+#     DEFECTDOJO_PRODUCT: "Test Dashboard"
+#     DEFECTDOJO_PRODUCT_TYPE: "Research and Development
+#   steps:
+#   - script: |
+#       python3.13 -m pip install defectdojo_api
+#     displayName: 'Install DefectDojo API'
+
+  
+#   - task: CmdLine@2
+#   inputs:
+#     script: |
+#       TODAY=`date +%Y-%m-%d`
+#       ENGAGEMENTID=`cat ENGAGEMENTID.env`
+#       files=("dependency-check-report/dependency-check-report.json" "image-scan-report/image-scan-report.json" "bandit-sast-report/sast-report.json")
+#       for scan in {0..2}; do
+#         curl --fail --location --request POST "$(DEFECTDOJO_URL)/import-scan/" \
+#           --header "Authorization: Token $(DEFECTDOJO_TOKEN)" \
+#           --form "scan_date=${TODAY}" \
+#           --form "scan_type=${type[$scan]}" \
+#           --form "engagement=${ENGAGEMENTID}" \
+#           --form "file=@$(Pipeline.Workspace)/${file[$scan]}" \
+#           --form "test_type=$(DEFECTDOJO_SCAN_TEST_TYPE)" \
+#           --form "environment=$(DEFECTDOJO_SCAN_ENVIRONMENT)"
+#       done
+#     displayName: 'Upload Reports To DefectDojo'
+#     condition: always()
 
 
   # - script: |
