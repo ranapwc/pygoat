@@ -60,7 +60,7 @@ jobs:
   steps:
 
   - script: |
-      pip install defectdojo_api
+      python3.13 -m pip install defectdojo_api
     displayName: 'Install DefectDojo API'
 
   - script: |
