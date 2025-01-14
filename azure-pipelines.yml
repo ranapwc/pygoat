@@ -58,17 +58,13 @@ jobs:
 
 - job: DefectdojoImportReport
   steps:
-  - task: UsePythonVersion@0
-    inputs:
-      versionSpec: '3.x'
-      addToPath: true
 
   - script: |
       pip install defectdojo_api
     displayName: 'Install DefectDojo API'
 
   - script: |
-      python -m defectdojo_api \
+      python3.13 -m defectdojo_api \
         --url 172.210.46.36:8080/ \
         --username $(DEFECTDOJO_USER) \
         --password $(DEFECTDOJO_PASS) \
