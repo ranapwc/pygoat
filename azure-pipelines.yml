@@ -74,7 +74,6 @@ jobs:
     script: |
       TODAY=`date +%Y-%m-%d`
       ENGAGEMENTID=`cat ENGAGEMENTID.env`
-      types=("Dependency Check Scan" "SARIF" "Bandit Scan")
       files=("dependency-check-report/dependency-check-report.json" "image-scan-report/image-scan-report.json" "bandit-sast-report/sast-report.json")
       for scan in {0..2}; do
         curl --fail --location --request POST "$(DEFECTDOJO_URL)/import-scan/" \
