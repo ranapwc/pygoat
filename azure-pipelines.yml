@@ -68,19 +68,7 @@ jobs:
       python3.13 -m pip install defectdojo_api
     displayName: 'Install DefectDojo API'
 
-  # - script: |
-  #     python3.13 -c "
-  #     from defectdojo_api import defectdojo_api;
-  #     defectdojo_api.main(
-  #       url='172.210.46.36:8080/',
-  #       username='$(DEFECTDOJO_USER)',
-  #       password='$(DEFECTDOJO_PASS)',
-      
-  #       file='bandit-report.json'
-  #     )"
-
   
-
   - task: CmdLine@2
   inputs:
     script: |
@@ -100,6 +88,22 @@ jobs:
       done
     displayName: 'Upload Reports To DefectDojo'
     condition: always()
+
+
+
+
+  # - script: |
+  #     python3.13 -c "
+  #     from defectdojo_api import defectdojo_api;
+  #     defectdojo_api.main(
+  #       url='172.210.46.36:8080/',
+  #       username='$(DEFECTDOJO_USER)',
+  #       password='$(DEFECTDOJO_PASS)',
+      
+  #       file='bandit-report.json'
+  #     )"
+
+
 
   # - task: UsePythonVersion@0 
   #   displayName: 'Set up Python'
