@@ -8,6 +8,9 @@ trigger:
 
 pool:
   name: Self-hosted
+
+variables:
+- group: DefectDojo
   
 jobs:
 # - job: echo_message
@@ -59,6 +62,7 @@ jobs:
   dependsOn: sast_scan
   displayName: 'Upload Bandit Report To DefectDojo'
   condition: always()
+  
   variables:
     DEFECTDOJO_SCAN_ENVIRONMENT: "Development"
     DEFECTDOJO_SCAN_TEST_TYPE: "SAST Scan"
