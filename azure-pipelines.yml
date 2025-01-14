@@ -68,9 +68,26 @@ jobs:
   - script: |
       python3.13 -m pip install defectdojo_api
     displayName: 'Install DefectDojo API'
+    
+  - script: |
+      echo "Checking connectivity to DefectDojo server..."
+      if curl --output /dev/null --silent --head --fail "$(DEFECTDOJO_URL)"; then
+        echo "DefectDojo server is reachable."
+      else
+        echo "DefectDojo server is not reachable."
+        exit 1
+      fi
+    displayName: 'Check DefectDojo Server Connectivity'
 
-
-
+  - script: |
+      echo "DEFECTDOJO_URL: $(DEFECTDOJO_URL)"
+      echo "DEFECTDOJO_TOKEN: $(DEFECTDOJO_TOKEN)"
+      echo "DEFECTDOJO_SCAN_ENVIRONMENT: $(DEFECTDOJO_SCAN_ENVIRONMENT)"
+      echo "DEFECTDOJO_SCAN_TEST_TYPE: $(DEFECTDOJO_SCAN_TEST_TYPE)"
+      echo "DEFECTDOJO_PRODUCT: $(DEFECTDOJO_PRODUCT)"
+      echo "DEFECTDOJO_PRODUCT_TYPE: $(DEFECTDOJO_PRODUCT_TYPE)"
+      echo "ENGAGEMENTID: $(ENGAGEMENTID)"
+    displayName: 'Print DefectDojo Variables'
 
 
 
