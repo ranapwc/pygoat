@@ -63,7 +63,6 @@ jobs:
     DEFECTDOJO_SCAN_TEST_TYPE: "SAST Scan"
     DEFECTDOJO_PRODUCT: "Test Dashboard"
     DEFECTDOJO_PRODUCT_TYPE: "Research and Development
-    DEFECTDOJO_ENGAGEMENT_NAME: "pygoat-github"
   steps:
   - script: |
       python3.13 -m pip install defectdojo_api
