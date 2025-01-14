@@ -56,28 +56,48 @@ jobs:
       publishLocation: 'Container'
 
 
-- job: DefectdojoImportReport
+- job: Defectdojo_import_report
   dependsOn: sast_scan
+  variables:
+    DEFECTDOJO_SCAN_ENVIRONMENT: "Development"
+    DEFECTDOJO_SCAN_TEST_TYPE: "SAST Scan"
+    DEFECTDOJO_PRODUCT: "Test Dashboard"
+    DEFECTDOJO_PRODUCT_TYPE: "Research and Development
+    DEFECTDOJO_ENGAGEMENT_NAME: "pygoat-github"
   steps:
   - script: |
       python3.13 -m pip install defectdojo_api
     displayName: 'Install DefectDojo API'
 
-  - script: |
-      python3.13 -c "
-      from defectdojo_api import defectdojo_api;
-      defectdojo_api.main(
-        url='172.210.46.36:8080/',
-        username='$(DEFECTDOJO_USER)',
-        password='$(DEFECTDOJO_PASS)',
-        product_type='Research and Development',
-        product='Test Dashboard',
-        environment='Development',
-        scan_type='SAST Scan',
-        engagement_name='pygoat-github',
-        file='bandit-report.json'
-      )"
-    displayName: 'Defectdojo Import Report'
+  # - script: |
+  #     python3.13 -c "
+  #     from defectdojo_api import defectdojo_api;
+  #     defectdojo_api.main(
+  #       url='172.210.46.36:8080/',
+  #       username='$(DEFECTDOJO_USER)',
+  #       password='$(DEFECTDOJO_PASS)',
+      
+  #       file='bandit-report.json'
+  #     )"
+
+  - task: CmdLine@2
+  inputs:
+    script: |
+      TODAY=`date +%Y-%m-%d`
+      ENGAGEMENTID=`cat ENGAGEMENTID.env`
+      array=('type=("Dependency Check Scan" "SARIF" "Bandit Scan")' 'file=("dependency-check-report/dependency-check-report.json" "image-scan-report/image-scan-report.json" "bandit-report/sast-report.json")')
+      for elt in "${array[@]}";do eval $elt;done
+      for scan in 0 1 2; do \
+        curl --fail --location --request POST "$(DEFECTDOJO_URL)/import-scan/" \
+          --header "Authorization: Token $(DEFECTDOJO_TOKEN)" \
+          --form "scan_date=${TODAY}" \
+          --form "scan_type=${type[$scan]}" \
+          --form "engagement=${ENGAGEMENTID}" \
+          --form "file=@$(Pipeline.Workspace)/${file[$scan]}" \
+          --form "test_type=$(DEFECTDOJO_SCAN_TEST_TYPE)" \
+          --form "environment=$(DEFECTDOJO_SCAN_ENVIRONMENT)"
+      done
+    displayName: 'Upload Reports To DefectDojo'
     condition: always()
 
   # - task: UsePythonVersion@0 
