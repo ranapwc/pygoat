@@ -55,9 +55,10 @@ jobs:
       ArtifactName: 'bandit-findings'
       publishLocation: 'Container'
 
-
 - job: Defectdojo_import_report
   dependsOn: sast_scan
+  displayName: 'Upload Bandit Report To DefectDojo'
+  condition: always()
   variables:
     DEFECTDOJO_SCAN_ENVIRONMENT: "Development"
     DEFECTDOJO_SCAN_TEST_TYPE: "SAST Scan"
@@ -68,8 +69,6 @@ jobs:
       python3.13 -m pip install defectdojo_api
     displayName: 'Install DefectDojo API'
 
-displayName: 'Upload Bandit Report To DefectDojo'
-    condition: always()
 
 
 
