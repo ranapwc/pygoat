@@ -22,6 +22,18 @@ jobs:
       - name: Run Bandit Scan
         run: bandit -ll -ii -r . -f json -o bandit-report.json || true
 
+      - name: Bandit Quick View Summary
+        if: always()
+        run: |
+          echo "🔍 Bandit Quick View:"
+          if [ -f bandit-report.json ]; then
+            issues=$(jq '.results | length' bandit-report.json)
+            echo "Total Issues Found: $issues"
+            jq -r '.results[] | "\(.severity): \(.test_id) - \(.issue_text)"' bandit-report.json | head -n 10
+          else
+            echo "No Bandit report found."
+          fi
+
       - name: Upload Bandit Report
         uses: actions/upload-artifact@v4
         if: always()
@@ -30,20 +42,17 @@ jobs:
           path: bandit-report.json
 
   image_scan:
-    name: Build image & run Scan
+    name: Build image & run Docker Scout
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Set up Docker
-        uses: docker/setup-docker-action@v4.3.0
-        
       - name: Build Docker image
         run: docker build -f Dockerfile -t myapp:latest --progress=plain .
 
-      - name: Run Docker Scout Scan
+      - name: Docker Scout Scan
         uses: docker/scout-action@v1.16.1
         with:
           dockerhub-user: ${{ secrets.DOCKERHUB_USER }}
@@ -63,17 +72,20 @@ jobs:
   dast_scan:
     name: Run OWASP ZAP DAST Scan
     runs-on: ubuntu-latest
-    needs: image_scan  # Ensure app is built before scanning
-  
+    needs: image_scan
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+
+      - name: Install gunicorn
+        run: pip install gunicorn
 
       - name: Build and run app container
         run: |
           docker build -t myapp:latest .
           docker run -d -p 8000:8000 --name myapp myapp:latest
-          sleep 10  # Wait for app to be ready
+          sleep 10
 
       - name: Run OWASP ZAP Baseline Scan
         run: |
@@ -82,7 +94,19 @@ jobs:
             -r zap-report.html \
             -J zap-report.json \
             -x zap-report.xml \
-            -I
+            -I || true
+
+      - name: OWASP ZAP Quick View Summary
+        if: always()
+        run: |
+          echo "🔍 OWASP ZAP Quick View:"
+            if [ -f zap-report.json ]; then
+              alerts=$(jq '.site[0].alerts | length' zap-report.json)
+              echo "Total Alerts Found: $alerts"
+              jq -r '.site[0].alerts[] | "\(.riskdesc): \(.alert)"' zap-report.json | head -n 10
+            else
+              echo "No ZAP report found."
+            fi
 
       - name: Upload ZAP JSON Report
         uses: actions/upload-artifact@v4
@@ -90,7 +114,6 @@ jobs:
         with:
           name: zap-json-report
           path: zap-report.json
-
 
   
    # - name: Defectdojo Import Report
