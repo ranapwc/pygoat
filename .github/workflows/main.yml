@@ -44,10 +44,10 @@ jobs:
    #    scan-results-file-name: bandit-report
    #    debug: true
 
-   - name: Check connectivity to DefectDojo
-     if: always()
-     run: |
-        curl -I http://172.210.46.36:8080/api/v2/api-token-auth/
+   # - name: Check connectivity to DefectDojo
+   #   if: always()
+   #   run: |
+   #      curl -I http://172.210.46.36:8080/api/v2/api-token-auth/
 
         
    # - name: DefectDojo Import scan
@@ -64,21 +64,21 @@ jobs:
    #    engagement: pygoat-github
 
 
- image_scan:
-  name: Build image & run Scan
-  runs-on: ubuntu-latest
+ # image_scan:
+ #  name: Build image & run Scan
+ #  runs-on: ubuntu-latest
 
-  steps:
-  - name: Checkout code
-    uses: actions/checkout@v4
+ #  steps:
+ #  - name: Checkout code
+ #    uses: actions/checkout@v4
 
-  - name: Setup Docker
-    uses: docker-practice/actions-setup-docker@v1
-    with:
-     docker_version: '20.10.7'
+ #  - name: Setup Docker
+ #    uses: docker-practice/actions-setup-docker@v1
+ #    with:
+ #     docker_version: '20.10.7'
 
-  - name: Build docker image
-    run: docker build -f Dockerfile -t myapp:latest --progress=plain .
+ #  - name: Build docker image
+ #    run: docker build -f Dockerfile -t myapp:latest --progress=plain .
 
   # - name: Docker Scout Scan
   #   run: |
@@ -107,18 +107,18 @@ jobs:
       name: docker-scout-findings
       path: docker-scout-report.sarif
 
-  - name: Defectdojo Import Report
-    uses: portswigger-cloud/defectdojo-import-scan@v1.0.1
-    if: always()
-    with:
-      defectdojo-url: 172.210.46.36:8080/
-      defectdojo-username: ${{ secrets.DEFECTDOJO_USER }}
-      defectdojo-password: ${{ secrets.DEFECTDOJO_PASS }}
-      defectdojo-product-type: Research and Development
-      defectdojo-product: Test Dashboard
-      defectdojo-environment-type: Development
-      defectdojo-scan-type: Container Scan
-      defectdojo-engagement-name: pygoat-github
-      scan-results-file-name: docker-scout-report
+  # - name: Defectdojo Import Report
+  #   uses: portswigger-cloud/defectdojo-import-scan@v1.0.1
+  #   if: always()
+  #   with:
+  #     defectdojo-url: 172.210.46.36:8080/
+  #     defectdojo-username: ${{ secrets.DEFECTDOJO_USER }}
+  #     defectdojo-password: ${{ secrets.DEFECTDOJO_PASS }}
+  #     defectdojo-product-type: Research and Development
+  #     defectdojo-product: Test Dashboard
+  #     defectdojo-environment-type: Development
+  #     defectdojo-scan-type: Container Scan
+  #     defectdojo-engagement-name: pygoat-github
+  #     scan-results-file-name: docker-scout-report
      
      
